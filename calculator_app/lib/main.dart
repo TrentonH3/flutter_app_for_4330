@@ -1,37 +1,68 @@
-import 'package:calculator_app/main.dart';
+import 'package:flutter/material.dart';
 
 void main() {
-  group('Calculator App Unit Tests', () {
-    final calculator = Calculator();
+  runApp(const MyApp());
+}
 
-    // Test 1: Addition (Checking 2 + 2 = 4)
-    test('Addition test: 2 + 2 should equal 4', () {
-      final result = calculator.add(2, 2);
-      expect(result, 4);
-    });
+class Calculator {
+  int add(int a, int b) => a + b;
+  int subtract(int a, int b) => a - b;
+  int multiply(int a, int b) => a * b;
+  double divide(int a, int b) {
+    if (b == 0) throw ArgumentError('Cannot divide by zero');
+    return a / b;
+  }
+  bool isEven(int n) => n % 2 == 0;
+}
 
-    // Test 2: Subtraction
-    test('Subtraction test: 5 - 3 should equal 2', () {
-      final result = calculator.subtract(5, 3);
-      expect(result, 2);
-    });
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-    // Test 3: Multiplication
-    test('Multiplication test: 3 * 4 should equal 12', () {
-      final result = calculator.multiply(3, 4);
-      expect(result, 12);
-    });
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Calculator App',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const CalculatorHomePage(),
+    );
+  }
+}
 
-    // Test 4: Division
-    test('Division test: 10 / 2 should equal 5.0', () {
-      final result = calculator.divide(10, 2);
-      expect(result, 5.0);
-    });
+class CalculatorHomePage extends StatefulWidget {
+  const CalculatorHomePage({super.key});
 
-    // Test 5: Conditional logic check (isEven)
-    test('Even number validation test: 4 should be even', () {
-      final result = calculator.isEven(4);
-      expect(result, true);
+  @override
+  State<CalculatorHomePage> createState() => _CalculatorHomePageState();
+}
+
+class _CalculatorHomePageState extends State<CalculatorHomePage> {
+  final Calculator _calculator = Calculator();
+  String _result = "0";
+
+  void _calculateAdd() {
+    setState(() {
+      _result = _calculator.add(2, 2).toString();
     });
-  });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Calculator App')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Result:', style: TextStyle(fontSize: 20)),
+            Text(_result, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _calculateAdd,
+              child: const Text('Add 2 + 2'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
