@@ -28,6 +28,12 @@ jobs:
 
     - name: Install dependencies
       run: flutter pub get
+      working-directory: calculator_app
+
+    - name: Run analyzer
+      run: flutter analyze
+      working-directory: calculator_app
 
     - name: Run tests
       run: flutter test
+      working-directory: calculator_app
