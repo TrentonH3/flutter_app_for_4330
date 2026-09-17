@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:calculator_app/main.dart'; // Make sure this matches your project import name
+import '../lib/main.dart';
 
 void main() {
   group('Calculator App Unit Tests', () {
     final calculator = Calculator();
 
-    // Test 1: Addition (Checking 2 + 2 = 4 as specified in your steps)
+    // Test 1: Addition (Checking 2 + 2 = 4)
     test('Addition test: 2 + 2 should equal 4', () {
       final result = calculator.add(2, 2);
       expect(result, 4);
